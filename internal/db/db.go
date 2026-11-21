@@ -698,7 +698,8 @@ CREATE INDEX IF NOT EXISTS idx_provider_freshness_updated_at
 // (183: prefer structured Antigravity user prompts over skill expansions.)
 // (184: prevent older binaries from overwriting prompt-derived PR links.)
 // (185: prevent older binaries from clearing Cursor account usage stamps on reparse.)
-const dataVersion = 185
+// (186: include retained tool calls in pull request links.)
+const dataVersion = 186
 
 const archiveOnlyVersionBase = 1 << 20
 
@@ -5591,6 +5592,9 @@ func (db *DB) HasCJKFTS(ctx context.Context) (available bool) {
 func (db *DB) setDataVersion(ctx context.Context) error {
 	return db.Update(ctx, func(tx *sql.Tx) error {
 		if err := db.upgradePromptPRLinksTx(ctx, tx); err != nil {
+			return err
+		}
+		if err := db.upgradeToolPRLinksTx(ctx, tx); err != nil {
 			return err
 		}
 		return advanceDataVersion(ctx, tx, dataVersion)
