@@ -698,7 +698,7 @@ CREATE INDEX IF NOT EXISTS idx_provider_freshness_updated_at
 // (183: prefer structured Antigravity user prompts over skill expansions.)
 // (184: prevent older binaries from overwriting prompt-derived PR links.)
 // (185: prevent older binaries from clearing Cursor account usage stamps on reparse.)
-const dataVersion = 186
+const dataVersion = 185
 
 const archiveOnlyVersionBase = 1 << 20
 
