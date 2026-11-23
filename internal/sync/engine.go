@@ -6386,7 +6386,7 @@ func (e *Engine) syncAllLocked(
 		// sees each copy's real mtime; the quick-sync dedupe below then keeps
 		// the newest surviving duplicate before falling back to normal layout
 		// preference.
-		all = e.expandCodexProviderDuplicates(all, scope)
+		all = e.expandCodexProviderDuplicates(ctx, all, scope)
 		all = e.filterQuickSyncFiles(ctx, all, since)
 	}
 
